@@ -1,7 +1,3 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
-#include <SDL/SDL_ttf.h>
 #include "fonction.h"
 
 
@@ -95,6 +91,51 @@ imge->pos_img_affiche.w=1090;
 imge->pos_img_affiche.h=668;
 }
 
+void initialiser_imageCREDIT1(image *imge)
+{
+imge->img=IMG_Load("credit1.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
+
+
+void initialiser_imageCREDIT2(image *imge)
+{
+imge->img=IMG_Load("credit2.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
+
+void initialiser_imageCHOIX (image *imge)
+{
+imge->img=IMG_Load("choix.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
 
 
 void initialiser_imageBOUTON1 (image *imgbtn)
@@ -322,22 +363,152 @@ imgbtn->pos_img_affiche.x=430;
 imgbtn->pos_img_affiche.y=467;
 }
 
-void initialiser_imageBOUTONP1 (image *imgbtn)
+
+void initialiser_imageBOUTONP (image *imgbtn)
 {
 imgbtn->img=IMG_Load("revenir.gif");
 	if (imgbtn->img== NULL) {
 		printf("unable to load background image %s \n", SDL_GetError());
 		return ;}
 
-imgbtn->pos_img_affiche.x=996; 
-imgbtn->pos_img_affiche.y=0;
+imgbtn->pos_img_affiche.x=991; 
+imgbtn->pos_img_affiche.y=590;
 imgbtn->pos_img_affiche.h=53; 
 imgbtn->pos_img_affiche.w=50;
 }
 
+void initialiser_imageBOUTONC (image *imgbtn)
+{
+imgbtn->img=IMG_Load("revenir.gif");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=991; 
+imgbtn->pos_img_affiche.y=1;
+imgbtn->pos_img_affiche.h=53; 
+imgbtn->pos_img_affiche.w=50;
+}
+
+void initialiser_imageBOUTONC1 (image *imgbtn)
+{
+imgbtn->img=IMG_Load("next.gif");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=1016; 
+imgbtn->pos_img_affiche.y=8;
+imgbtn->pos_img_affiche.h=53; 
+imgbtn->pos_img_affiche.w=50;
+}
+
+void initialiser_imageCHOIX_BTN1(image *imgbtn)
+{
+imgbtn->img=IMG_Load("singleplayer.png");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=319; 
+imgbtn->pos_img_affiche.y=155;
+imgbtn->pos_img_affiche.h=135; 
+imgbtn->pos_img_affiche.w=464;
+}
+
+void initialiser_imageCHOIX_BTN2 (image *imgbtn)
+{
+imgbtn->img=IMG_Load("multiplayer.png");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=322; 
+imgbtn->pos_img_affiche.y=374;
+imgbtn->pos_img_affiche.h=135; 
+imgbtn->pos_img_affiche.w=464;
+}
+
+//city of the future
+void initialiser_city_future (image *imge)
+{
+imge->img=IMG_Load("cityofthefuture.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
+
+void initialiser_game_over(image *imge)
+{
+imge->img=IMG_Load("gameover.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
 
 
+void initialiser_image_game_over_BTN1 (image *imgbtn)
+{
+imgbtn->img=IMG_Load("yes.png");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
 
+imgbtn->pos_img_affiche.x=456; 
+imgbtn->pos_img_affiche.y=486;
+}
+
+
+void initialiser_image_game_over_BTN2 (image *imgbtn)
+{
+imgbtn->img=IMG_Load("no.png");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=533; 
+imgbtn->pos_img_affiche.y=486;
+}
+
+void initialiser_best_score(image *imge)
+{
+imge->img=IMG_Load("score.jpg");
+if (imge->img == NULL) {
+printf("unable to load background image %s \n", SDL_GetError());
+return ;}
+
+imge->pos_img_ecran.x=0;
+imge->pos_img_ecran.y=0;
+imge->pos_img_affiche.x=0;
+imge->pos_img_affiche.y=0;
+imge->pos_img_affiche.w=1090;
+imge->pos_img_affiche.h=668;
+}
+
+void initialiser_image_best_score_BTN1(image *imgbtn)
+{
+imgbtn->img=IMG_Load("best-score.png");
+	if (imgbtn->img== NULL) {
+		printf("unable to load background image %s \n", SDL_GetError());
+		return ;}
+
+imgbtn->pos_img_affiche.x=820; 
+imgbtn->pos_img_affiche.y=590;
+}
 
 
 void afficher_imageBMP (SDL_Surface *screen, image imge)
@@ -466,18 +637,79 @@ void afficher_imagePLAY (SDL_Surface *news, image imge)
 SDL_BlitSurface (imge.img, NULL, news, &imge.pos_img_affiche);
 }
 
-void afficher_imageBTNP1 (SDL_Surface *news, image imge)
+
+void afficher_imageBTNP (SDL_Surface *news, image imge)
 {
 SDL_BlitSurface (imge.img, NULL, news, &imge.pos_img_affiche);
 }
 
+void afficher_imageCREDIT1 (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
 
 
+void afficher_imageCREDIT2 (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_imageBTNC1 (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_imageBTNC (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_imageCHOIX (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_imageCHOIX_BTN1 (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_imageCHOIX_BTN2 (SDL_Surface *screen,image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_city_future(SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_game_over(SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
+
+void afficher_game_over_BTN1 (SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
 
 
+void afficher_game_over_BTN2 (SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
 
 
+void afficher_best_score(SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
 
+void afficher_best_score_BTN1(SDL_Surface *screen, image imge)
+{
+SDL_BlitSurface (imge.img, NULL, screen, &imge.pos_img_affiche);
+}
 
 
 
@@ -542,76 +774,108 @@ TTF_Quit();
 
 
 
+
+
+
+
+
+
+
+
+//enemy
 void initEnnemi(Enemy *e)
 {
-	e->img[0][0]=IMG_Load("right1.gif");
-	e->img[0][1]=IMG_Load("right2.gif");
-	e->img[0][2]=IMG_Load("right3.gif");
-	e->img[0][3]=IMG_Load("right4.gif");
-	e->img[0][4]=IMG_Load("right5.gif");
-	e->img[1][0]=IMG_Load("left1.gif");
-	e->img[1][1]=IMG_Load("left2.gif");
-	e->img[1][2]=IMG_Load("left3.gif");
-	e->img[1][3]=IMG_Load("left4.gif");
-	e->img[1][4]=IMG_Load("left5.gif");
-	e->pos.x=700;
-	e->pos.y=350;
+	e->state=attacking;
+	e->img[0][0]=IMG_Load("right1.png");
+	e->img[0][1]=IMG_Load("right2.png");
+	e->img[0][2]=IMG_Load("right3.png");
+	e->img[0][3]=IMG_Load("right4.png");
+	e->img[0][4]=IMG_Load("right5.png");
+	e->img[1][0]=IMG_Load("left1.png");
+	e->img[1][1]=IMG_Load("left2.png");
+	e->img[1][2]=IMG_Load("left3.png");
+	e->img[1][3]=IMG_Load("left4.png");
+	e->img[1][4]=IMG_Load("left5.png");
+    e->img[2][0]=IMG_Load("right1.gif");
+	e->img[2][1]=IMG_Load("right2.gif");
+	e->img[2][2]=IMG_Load("right3.gif");
+	e->img[2][3]=IMG_Load("right4.gif");
+	e->img[2][4]=IMG_Load("right5.gif");
+	e->img[3][0]=IMG_Load("left1.gif");
+	e->img[3][1]=IMG_Load("left2.gif");
+	e->img[3][2]=IMG_Load("left3.gif");
+	e->img[3][3]=IMG_Load("left4.gif");
+	e->img[3][4]=IMG_Load("left5.gif");
+	e->pos.x=900;
+	e->pos.y=380;
 	e->pos.h=174;
-	e->pos.w=138;
+	e->pos.w=135;
 	e->frame=0;
-	e->direction=0;
+	e->direction=1;
+    e->exp[0]=IMG_Load("exp1.png");
+	e->exp[1]=IMG_Load("exp2.png");
+	e->exp[2]=IMG_Load("exp3.png");
+	e->exp[3]=IMG_Load("exp4.png");
+	e->exp[4]=IMG_Load("exp5.png");
+	e->exp[5]=IMG_Load("exp6.png");
+	e->exp[6]=IMG_Load("exp7.png");
+	e->exp[7]=IMG_Load("exp8.png");
+	e->exp[8]=IMG_Load("exp9.png");
+	e->exp[9]=IMG_Load("exp10.png");
+    e->posexp.x=0;
+	e->posexp.y=0;
+	e->posexp.h=258;
+	e->posexp.w=258;    
+    e->expframe=0;
+    e->arret=0;
+    e->state=waiting;
 }
 
-void afficherEnnemi(Enemy e, SDL_Surface *screen)
+
+
+/*void move(Enemy *e)
 {
-  SDL_BlitSurface(e.img[e.direction][e.frame],NULL,screen,&e.pos);
-}
+	if (e->pos.x>900){
+	e->direction=1;}
+	else{
+	if (e->pos.x<800){
+	e->direction=0;}
+	}
+	if (e->direction==0){
+	(e->pos.x)+=8;}
+	else{
+	if (e->direction==1){
+	(e->pos.x)-=8;}
+	}
+}*/
 
 
-void move(Enemy *e)
+void afficherEnnemi(Enemy e,SDL_Surface *screen)
 {
-  if (e->pos.x>1000){
-  e->direction=1;}
-  else{
-  if (e->pos.x<700){
-  e->direction=0;}
-  }
-  if (e->direction==0){
-  (e->pos.x)+=9;}
-  else{
-  if (e->direction==1){
-  (e->pos.x)-=9;}
-  }
+	SDL_BlitSurface(e.img[e.direction][e.frame],NULL,screen,&e.pos);
 }
+
 
 void animerEnnemi(Enemy *e)
 {
-  if (e->direction==0){
-  SDL_Delay(60);
-  if (e->frame==4){
-  e->frame=0;}
-  else{
-  (e->frame)++;}}
-  else{
-  if (e->direction==1){
-  SDL_Delay(60);
-  if (e->frame==4){
-  e->frame=0;}
-  else{
-  (e->frame)++;}}     
-  }
+	SDL_Delay(70);
+	if (e->frame==4){
+	e->frame=0;}
+	else{
+	(e->frame)++;}	
 }
 
 
 int collisionBB(personne p,Enemy e)
 {
-  int col;
-  if ((e.pos.x+e.pos.w<p.posPerso.x) || (e.pos.x>p.posPerso.x+p.posPerso.w) || (e.pos.y+e.pos.h<p.posPerso.y) || (e.pos.y>p.posPerso.y+p.posPerso.h)){
-  col=0;}
-  else{
-  col=1;}  
-  return col;
+	int col;
+	if ((e.pos.x+e.pos.w<p.posPerso.x) || (e.pos.x>p.posPerso.x+p.posPerso.w) || (e.pos.y+e.pos.h<p.posPerso.y) || (e.pos.y>p.posPerso.y+p.posPerso.h)){
+	col=0;}
+	else{
+	col=1;}  
+	return col;
 }
+
 
 void free_enemy(Enemy *e)
 {
@@ -625,6 +889,108 @@ void free_enemy(Enemy *e)
 	SDL_FreeSurface(e->img[1][2]);
 	SDL_FreeSurface(e->img[1][3]);
 	SDL_FreeSurface(e->img[1][4]);
+    SDL_FreeSurface(e->img[2][0]);
+	SDL_FreeSurface(e->img[2][1]);
+	SDL_FreeSurface(e->img[2][2]);
+	SDL_FreeSurface(e->img[2][3]);
+	SDL_FreeSurface(e->img[2][4]);
+	SDL_FreeSurface(e->img[3][0]);
+	SDL_FreeSurface(e->img[3][1]);
+	SDL_FreeSurface(e->img[3][2]);
+	SDL_FreeSurface(e->img[3][3]);
+	SDL_FreeSurface(e->img[3][4]);
+    SDL_FreeSurface(e->exp[0]);
+	SDL_FreeSurface(e->exp[1]);
+	SDL_FreeSurface(e->exp[2]);
+	SDL_FreeSurface(e->exp[3]);
+	SDL_FreeSurface(e->exp[4]);
+	SDL_FreeSurface(e->exp[5]);
+	SDL_FreeSurface(e->exp[6]);
+	SDL_FreeSurface(e->exp[7]);
+	SDL_FreeSurface(e->exp[8]);
+	SDL_FreeSurface(e->exp[9]);
+}
+
+
+void afficher_explosion(Enemy e,SDL_Surface *screen)
+{
+ SDL_BlitSurface(e.exp[e.expframe],NULL,screen,&e.posexp);
+}
+
+
+void animer_explosion(Enemy *e)
+{
+    SDL_Delay(25);
+	if (e->expframe==9){
+	e->arret=1;}
+	else{
+	(e->expframe)++;}
+}
+
+void moveAI(Enemy* e,SDL_Rect posHero)
+{
+    int s1=850,s2=250;
+    int d=(e->pos.x) - posHero.x;
+	if (d>s2 && d<s1){
+	e ->direction=1; 
+	e->pos.x-=8;}
+	else {
+	if (d>-s1 && d<-s2){
+	e ->direction=0; 
+	e ->pos.x+=8;}
+	else{
+	if (d>=0 && d<=s2) {
+	e ->direction=3;
+	e ->pos.x-=8;}
+	else{
+    if (d>=-s2  && d<=0){
+	e ->direction=2;
+	e -> pos.x +=8;}
+    }}}
+}
+
+
+void updateEnnemiState (Enemy* e, int distEH) 
+{
+int s1=850,s2=250;
+switch(e->state){
+case(waiting):
+if (distEH>s1 ){
+e->state=waiting;}
+else{
+if (s2<distEH<=s1 ){
+e->state=following;}}
+break;
+case(following):
+if (s2<distEH<=s1 ){
+e->state=following;}
+else{
+if (0<distEH<=s2 ){
+e->state=attacking;}}
+break;
+case(attacking):
+if (0<distEH<=s2 ){
+e->state=attacking;}
+break;
+}
+}
+
+
+void updateEnnemi (Enemy *e,SDL_Rect posHero)
+{
+switch(e->state){
+case(waiting):
+animerEnnemi(e);	
+break;
+case(following):
+animerEnnemi(e);
+moveAI(e,posHero);
+break;
+case(attacking):
+animerEnnemi(e);
+moveAI(e,posHero);
+break;
+}
 }
 
 
@@ -636,7 +1002,7 @@ void free_enemy(Enemy *e)
 
 
 
-
+//perso
 void initPerso(personne *p)
 {
     p->sprite = IMG_Load("sprite.png");
@@ -774,10 +1140,10 @@ void freePerso(personne *p)
 
 
 
-
+//minimap
 void initmap(minimap *m)
 {
-m->mp=IMG_Load("minimap2.gif");
+m->mp=IMG_Load("minimap1.jpg");
 m->pos_mp.x=673;
 m->pos_mp.y=20;
 m->pos_mp.w=395;
@@ -788,12 +1154,6 @@ m->pos_per.x=678;
 m->pos_per.y=112;
 m->pos_per.h=100;
 m->pos_per.w=120;
-
-m->enemy=IMG_Load("minienemy.png");
-m->pos_enemy.x=65;
-m->pos_enemy.y=220;
-m->pos_enemy.h=37;
-m->pos_enemy.w=53;
 
 m->img[0]=IMG_Load("e1.gif");
 m->img[1]=IMG_Load("e2.gif");
@@ -811,11 +1171,11 @@ m->pos_enigme.h=500;
 m->pos_enigme.w=496;
 m->frame=0;
 
-m->mas=IMG_Load("mapa1.png");
-m->pos.x=673;
-m->pos.y=20;
-m->pos.w=395;
-m->pos.h=135;
+m->mas=IMG_Load("mask.jpg");
+m->pos.x=0;
+m->pos.y=0;
+m->pos.w=1090;
+m->pos.h=668;
 }
 
 
@@ -823,8 +1183,8 @@ m->pos.h=135;
 void afficherminimap(minimap m,SDL_Surface *screen)
 {
 SDL_BlitSurface (m.mp, NULL, screen,&m.pos_mp);
+//SDL_BlitSurface (m.mas, NULL, screen,&m.pos);
 SDL_BlitSurface (m.per,NULL, screen,&m.pos_per);
-SDL_BlitSurface (m.enemy, NULL, screen,&m.pos_enemy);
 SDL_BlitSurface(m.img[m.frame],NULL,screen,&m.pos_enigme);
 }
 
@@ -867,29 +1227,30 @@ m->pos_enemy.y=(pos_enemie.y+camera.x) * redimensionnement/100+40;
 
 
 
-SDL_Color GetPixel(SDL_Surface *pSurface,int x,int y)
+SDL_Color GetPixel(SDL_Surface *surface,int x,int y)
 {
 	SDL_Color color ;
 	Uint32 col = 0 ;
-	char* pPosition = (char* ) pSurface->pixels;
-	pPosition += ( pSurface->pitch * y ) ;
-	pPosition += ( pSurface->format->BytesPerPixel) ;
-	memcpy (&col ,pPosition ,pSurface->format->BytesPerPixel);
-	SDL_GetRGB(col ,pSurface->format ,&color.r ,&color.g ,&color.b) ;
-	return (color);
+	char* pPosition = ( char* ) surface->pixels ;
+	pPosition += ( surface->pitch * y ) ;
+	pPosition += ( surface->format->BytesPerPixel * x ) ;
+	memcpy ( &col , pPosition , surface->format->BytesPerPixel ) ;
+	SDL_GetRGB ( col , surface->format , &color.r , &color.g , &color.b ) ;
+	return ( color ) ;
 }
 
 
 
 
-int collisionPP( SDL_Rect posjoueur, SDL_Surface *mask)
+
+/*int collisionPP( SDL_Rect posjoueur, SDL_Surface *mask)
 {
 SDL_Surface *BackgroundMasque=mask;
 int x=posjoueur.x;
 int y=posjoueur.y;
 int h=posjoueur.h;
 int w=posjoueur.w;
-int collision;
+int collision=0;
 int i;
 SDL_Color couleur_obstacle={0,0,0};
 SDL_Color test;
@@ -919,6 +1280,93 @@ if (couleur_obstacle.r==test.r && couleur_obstacle.g==test.g && couleur_obstacle
 collision=1;}
 else{
 i++;}}
+
+return collision;
+}*/
+
+
+
+int collisionPP_droite( SDL_Rect posjoueur, SDL_Surface *mask,SDL_Rect camera)
+{
+int collision=0;
+int i;
+SDL_Color couleur_obstacle={0,0,0},test;
+//int couleur_obstacle;
+//SDL_Color couleur_obstacle;
+//Uint32 col=0;
+int pos[3][2];
+pos[0][0]=camera.x+posjoueur.x+posjoueur.w;
+pos[0][1]=posjoueur.y;
+pos[1][0]=camera.x+posjoueur.x+posjoueur.w;
+pos[1][1]=posjoueur.y+posjoueur.h/2;
+pos[2][0]=camera.x+posjoueur.x+posjoueur.w;
+pos[2][1]=posjoueur.y+posjoueur.h;
+for(i=0;i<2 && collision==0;i++)
+{test=GetPixel(mask,pos[i][0],pos[i][1]);
+if ((test.r==couleur_obstacle.r)&&(test.g==couleur_obstacle.g)&&(test.b==couleur_obstacle.b))
+collision=1;
+//collision=1;
+
+}
+return collision;
+}
+
+
+int collisionPP_gauche( SDL_Rect posjoueur, SDL_Surface *mask,SDL_Rect camera)
+{
+int collision=0;
+int i;
+SDL_Color couleur_obstacle={0,0,0},test;
+int pos[3][2];
+pos[0][0]=100+camera.x+posjoueur.x;
+pos[0][1]=120+posjoueur.y;
+pos[1][0]=100+camera.x+posjoueur.x;
+pos[1][1]=120+posjoueur.y+posjoueur.h/2;
+pos[2][0]=100+camera.x+posjoueur.x;
+pos[2][1]=120+posjoueur.y+posjoueur.h;
+for(i=0;i<2 && collision==0;i++)
+{test=GetPixel(mask,pos[i][0],pos[i][1]);
+if ((test.r==couleur_obstacle.r)&&(test.g==couleur_obstacle.g)&&(test.b==couleur_obstacle.b))
+collision=1;
+//collision=1;
+
+}
+return collision;
+}
+
+
+
+
+int collisionPP_up( SDL_Rect posjoueur, SDL_Surface *mask,SDL_Rect camera)
+{
+int collision=0;
+int i;
+SDL_Color couleur_obstacle={0,0,0},test;
+int posX,posY;
+posX=camera.x+ posjoueur.x+ posjoueur.w/2;
+posY=posjoueur.y;
+
+test=GetPixel(mask,posX,posY);
+if ((test.r==couleur_obstacle.r)&&(test.g==couleur_obstacle.g)&&(test.b==couleur_obstacle.b))
+collision=1;
+
+return collision;
+}
+
+
+int collisionPP_down( SDL_Rect posjoueur, SDL_Surface *mask,SDL_Rect camera)
+{
+int collision=0;
+int i;
+SDL_Color couleur_obstacle={0,0,0},test;
+int posX,posY;
+posX=camera.x+ posjoueur.x+ posjoueur.w/2;
+posY=posjoueur.y+ posjoueur.h;
+
+test=GetPixel(mask,posX,posY);
+if ((test.r==couleur_obstacle.r)&&(test.g==couleur_obstacle.g)&&(test.b==couleur_obstacle.b))
+collision=1;
+
 return collision;
 }
 
@@ -964,9 +1412,11 @@ void animerMinimap(minimap *m)
 
 
 
+//background
 void init_back(Background *b)
 {
-b->img=IMG_Load("back2.jpg");
+b->img=IMG_Load("back1.jpg");
+
 b->imgg[0]=IMG_Load("e1.png");
 b->imgg[1]=IMG_Load("e2.png");
 b->imgg[2]=IMG_Load("e3.png");
@@ -1003,6 +1453,7 @@ SDL_BlitSurface (b.img,&b.camera_pos, screen,&b.pos);
 
 
 
+
 void afficheranim(Background b,SDL_Surface *screen)
 {
  SDL_BlitSurface(b.imgg[b.frame],NULL,screen,&b.posanim);
@@ -1011,8 +1462,9 @@ void afficheranim(Background b,SDL_Surface *screen)
 void free_back(Background *b)
 {
 SDL_FreeSurface(b->img);
+
 SDL_FreeSurface(b->imgg[0]);
-SDL_FreeSurface(b->imgg[1]);
+SDL_FreeSurface(b->imgg[1]);   
 SDL_FreeSurface(b->imgg[2]);
 SDL_FreeSurface(b->imgg[3]);
 SDL_FreeSurface(b->imgg[4]);
@@ -1048,6 +1500,312 @@ void scrolling(Background *b,int direction,personne p)
 	b->camera_pos.y += dy;}
 	}}}
 }
+
+
+
+
+
+
+
+
+
+
+//enigme
+void InitEnigme(enigmetf *e,char *nomfichier[]){  
+ 
+	nomfichier[100];
+
+
+	FILE *fquestion=NULL;
+	FILE *freponse=NULL;
+	FILE *fvraireponse=NULL;
+	
+	e->pos_selected=0;
+	e->background= IMG_Load("quiz.jpg");
+    e->pos_b.x=0;
+	e->pos_b.y=0;
+	e->pos_b.h=1000;
+	e->pos_b.w=1000;
+	
+	TTF_Init();
+	SDL_Color couleur = {255,255,255};
+
+	e->police = TTF_OpenFont("arial.ttf", 30);
+	e->police1 = TTF_OpenFont("arial.ttf", 25);
+	  
+	char questionn[150];
+	
+	srand(time(NULL)); 
+	e->num_question=rand()%4; 
+
+	while(e->num_question==0){
+		srand(time(NULL));
+		e->num_question=rand()%4;
+	}
+	 
+    sprintf(*nomfichier,"questions.txt");
+
+	fquestion=fopen(*nomfichier,"r+");
+
+	if(fquestion!=NULL){
+	 
+		int test=1;
+		while (fgets(questionn, 150, fquestion) &&(test!=e->num_question)){ 
+			test++;
+		}
+		
+		fclose(fquestion);
+	}
+
+	char reponse[20];
+
+	int min,max;
+    switch(e->num_question)
+    {
+    	case 1:
+    	{
+    		min=0;
+    		max=2;
+    		break;
+    	}
+    	case 2:
+    	{
+    		min=3;
+    		max=5;
+    		break;
+    	}
+    	case 3:
+    	{
+    		min=6;
+    		max=8;
+    		break;
+    	}
+    }
+
+
+	freponse=fopen("reponses.txt","r+");
+	if(freponse!=NULL){
+		int test=0;
+		while (fgets((reponse), 15, freponse) &&(test<max)){	
+			
+			if(test>=min){
+				e->reponses[test-min]=TTF_RenderText_Blended(e->police1, reponse, couleur); 
+			}
+			test++;
+		}	
+		fclose(freponse);
+	}
+
+
+	
+	fvraireponse=fopen("vraireponses.txt","r+");
+	if(fvraireponse!=NULL){
+		
+		int test=1;
+		while (fgets((reponse), 15, fvraireponse)){
+			
+			if(test==e->num_question){ 
+				printf("%s\n",reponse);
+				e->reponses[2]=TTF_RenderText_Blended(e->police1, reponse, couleur); 
+			}
+			test++;
+		}
+		fclose(fvraireponse);
+	}
+
+	srand(time(NULL));
+	e->positionVraiReponse=rand()%4;
+
+	while(e->positionVraiReponse==0){
+		srand(time(NULL));
+		e->positionVraiReponse=rand()%4;
+	}
+	printf("%d\n",e->positionVraiReponse);
+
+	e->question = TTF_RenderText_Blended(e->police, questionn, couleur);
+
+	e->pos_question.x=130;
+	e->pos_question.y=150;
+ 
+
+	e->pos_reponse1txt.x=495;
+	e->pos_reponse1txt.y=365;
+
+	e->pos_reponse2txt.x=225;
+	e->pos_reponse2txt.y=500;
+
+	e->pos_reponse3txt.x=790;
+	e->pos_reponse3txt.y=500;
+ 
+
+}
+
+void afficherEnigme(enigmetf e,SDL_Surface *ecran){
+
+	
+	SDL_BlitSurface(e.background, NULL, ecran, &e.pos_b);
+	SDL_Flip(ecran);
+	
+	SDL_BlitSurface(e.question, NULL, ecran, &e.pos_question);
+	SDL_Flip(ecran);
+	
+
+	switch(e.positionVraiReponse){
+		case 1:
+
+			SDL_BlitSurface(e.reponses[2], NULL, ecran, &e.pos_reponse1txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[0], NULL, ecran, &e.pos_reponse2txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[1], NULL, ecran, &e.pos_reponse3txt);
+			SDL_Flip(ecran);
+					
+		break;
+
+		case 2:
+
+		    SDL_BlitSurface(e.reponses[0], NULL, ecran, &e.pos_reponse1txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[2], NULL, ecran, &e.pos_reponse2txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[1], NULL, ecran, &e.pos_reponse3txt);
+			SDL_Flip(ecran);
+			
+		break;
+		
+		case 3:
+			
+			SDL_BlitSurface(e.reponses[0], NULL, ecran, &e.pos_reponse1txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[1], NULL, ecran, &e.pos_reponse2txt);
+			SDL_Flip(ecran);
+			SDL_BlitSurface(e.reponses[2], NULL, ecran, &e.pos_reponse3txt);
+			SDL_Flip(ecran);
+
+		break;
+		
+	}
+	
+	SDL_Delay(100);
+}
+
+int verify_enigme(enigmetf *e,SDL_Surface*ecran){
+
+	SDL_Rect pos={0,0};
+	if(e->positionVraiReponse==e->pos_selected)
+	{
+		printf("You win\n");
+		SDL_Surface *win;
+		win=IMG_Load("youwin.png");
+		SDL_BlitSurface(win, NULL, ecran,&pos);
+		SDL_Flip(ecran);
+		return 1;
+
+	}
+	else
+	{
+		SDL_Surface *lost;
+		lost=IMG_Load("youlose.png");
+		SDL_BlitSurface(lost, NULL, ecran, &pos);
+		SDL_Flip(ecran);
+		printf("You lost\n");
+		return 0;
+	}
+	SDL_Delay(2000);
+
+}
+
+void free_Surface_enigme(enigmetf e){
+
+	SDL_FreeSurface(e.background);
+	SDL_FreeSurface(e.question);
+	SDL_FreeSurface(e.reponses[0]);
+	SDL_FreeSurface(e.reponses[1]);
+	SDL_FreeSurface(e.reponses[2]);
+
+}
+
+
+
+void saveScore(ScoreInfo s, char *fileName) {
+    FILE *file = fopen(fileName, "a");
+    if (file != NULL) {
+        fprintf(file, "%d %d %s\n", s.score, s.temps, s.playerName);
+        fclose(file);
+    }
+}
+
+void bestScore(char *filename, ScoreInfo trois[]) {
+    FILE *file = fopen(filename, "r");
+    int count = 0;
+    ScoreInfo tmp;
+    while (fscanf(file, "%d %d %s", &tmp.score, &tmp.temps, tmp.playerName) == 3 && count < 3) {
+        trois[count] = tmp;
+        count++;
+    }
+    fclose(file);
+
+    int i, j;
+    for (i = 0; i < count - 1; i++) {
+        for (j = i + 1; j < count; j++) {
+            if (trois[j].score > trois[i].score || (trois[j].score == trois[i].score && trois[j].temps < trois[i].temps)) {
+                ScoreInfo tmp = trois[i];
+                trois[i] = trois[j];
+                trois[j] = tmp;
+            }
+        }
+    } 
+	
+}
+
+void afficherBest(SDL_Surface *screen, ScoreInfo trois[]) {
+	bestScore("scores.txt",trois) ;
+
+	SDL_Surface *txt1;
+	SDL_Rect pos1={380,200};
+	SDL_Surface *txt2;
+	SDL_Rect pos2={380,300};
+	SDL_Surface *txt3;
+	SDL_Rect pos3={380,400};
+    SDL_Color blanc = {255, 255, 255};
+	TTF_Font *police= TTF_OpenFont("font.ttf", 60); 
+    char ch1[50], ch2[50], ch3[50];
+
+    sprintf(ch1, "first: %d",trois[0].score);
+    sprintf(ch2, "second: %d", trois[1].score);
+    sprintf(ch3, "third: %d", trois[2].score);
+
+
+    txt1 = TTF_RenderText_Blended(police, ch1, blanc);
+	SDL_BlitSurface(txt1, NULL, screen, &pos1);
+	SDL_Flip(screen);
+    txt2 = TTF_RenderText_Blended(police, ch2, blanc);
+    SDL_BlitSurface(txt2, NULL, screen, &pos2);
+	SDL_Flip(screen);
+    txt3 = TTF_RenderText_Blended(police, ch3, blanc);
+	SDL_BlitSurface(txt3, NULL, screen, &pos3);
+	SDL_Flip(screen);
+
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
