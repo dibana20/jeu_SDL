@@ -1,5 +1,6 @@
 #include "enemy.h"
 
+
 void init_background(image *imge)
 {
 imge->img=IMG_Load("back.jpg");
@@ -14,6 +15,7 @@ imge->pos2.w=1090;
 imge->pos2.h=668;
 }
 
+
 void afficher_back(SDL_Surface *screen,image imge)
 {
 SDL_BlitSurface (imge.img,NULL,screen,&imge.pos2);
@@ -23,22 +25,33 @@ SDL_BlitSurface (imge.img,NULL,screen,&imge.pos2);
 
 void initEnnemi(Enemy *e)
 {
-	e->img[0][0]=IMG_Load("right1.gif");
-	e->img[0][1]=IMG_Load("right2.gif");
-	e->img[0][2]=IMG_Load("right3.gif");
-	e->img[0][3]=IMG_Load("right4.gif");
-	e->img[0][4]=IMG_Load("right5.gif");
-	e->img[1][0]=IMG_Load("left1.gif");
-	e->img[1][1]=IMG_Load("left2.gif");
-	e->img[1][2]=IMG_Load("left3.gif");
-	e->img[1][3]=IMG_Load("left4.gif");
-	e->img[1][4]=IMG_Load("left5.gif");
-	e->pos.x=500;
-	e->pos.y=360;
+	e->state=attacking;
+	e->img[0][0]=IMG_Load("right1.png");
+	e->img[0][1]=IMG_Load("right2.png");
+	e->img[0][2]=IMG_Load("right3.png");
+	e->img[0][3]=IMG_Load("right4.png");
+	e->img[0][4]=IMG_Load("right5.png");
+	e->img[1][0]=IMG_Load("left1.png");
+	e->img[1][1]=IMG_Load("left2.png");
+	e->img[1][2]=IMG_Load("left3.png");
+	e->img[1][3]=IMG_Load("left4.png");
+	e->img[1][4]=IMG_Load("left5.png");
+    e->img[2][0]=IMG_Load("right1.gif");
+	e->img[2][1]=IMG_Load("right2.gif");
+	e->img[2][2]=IMG_Load("right3.gif");
+	e->img[2][3]=IMG_Load("right4.gif");
+	e->img[2][4]=IMG_Load("right5.gif");
+	e->img[3][0]=IMG_Load("left1.gif");
+	e->img[3][1]=IMG_Load("left2.gif");
+	e->img[3][2]=IMG_Load("left3.gif");
+	e->img[3][3]=IMG_Load("left4.gif");
+	e->img[3][4]=IMG_Load("left5.gif");
+	e->pos.x=900;
+	e->pos.y=380;
 	e->pos.h=174;
-	e->pos.w=138;
+	e->pos.w=135;
 	e->frame=0;
-	e->direction=0;
+	e->direction=1;
     e->exp[0]=IMG_Load("exp1.png");
 	e->exp[1]=IMG_Load("exp2.png");
 	e->exp[2]=IMG_Load("exp3.png");
@@ -55,46 +68,41 @@ void initEnnemi(Enemy *e)
 	e->posexp.w=258;    
     e->expframe=0;
     e->arret=0;
+    e->state=waiting;
 }
 
-void afficherEnnemi(Enemy e, SDL_Surface *screen)
+
+
+/*void move(Enemy *e)
 {
-  SDL_BlitSurface(e.img[e.direction][e.frame],NULL,screen,&e.pos);
-}
+	if (e->pos.x>900){
+	e->direction=1;}
+	else{
+	if (e->pos.x<800){
+	e->direction=0;}
+	}
+	if (e->direction==0){
+	(e->pos.x)+=8;}
+	else{
+	if (e->direction==1){
+	(e->pos.x)-=8;}
+	}
+}*/
 
 
-void move(Enemy *e)
+void afficherEnnemi(Enemy e,SDL_Surface *screen)
 {
-  if (e->pos.x>800){
-  e->direction=1;}
-  else{
-  if (e->pos.x<500){
-  e->direction=0;}
-  }
-  if (e->direction==0){
-  (e->pos.x)+=8;}
-  else{
-  if (e->direction==1){
-  (e->pos.x)-=8;}
-  }
+	SDL_BlitSurface(e.img[e.direction][e.frame],NULL,screen,&e.pos);
 }
+
 
 void animerEnnemi(Enemy *e)
 {
-	if (e->direction==0){
 	SDL_Delay(70);
 	if (e->frame==4){
 	e->frame=0;}
 	else{
-	(e->frame)++;}}
-	else{
-	SDL_Delay(70);
-	if (e->direction==1){
-	if (e->frame==4){
-	e->frame=0;}
-	else{
-	(e->frame)++;}}     
-	}
+	(e->frame)++;}	
 }
 
 
@@ -108,6 +116,7 @@ int collisionBB(personne p,Enemy e)
 	return col;
 }
 
+
 void free_enemy(Enemy *e)
 {
 	SDL_FreeSurface(e->img[0][0]);
@@ -120,6 +129,16 @@ void free_enemy(Enemy *e)
 	SDL_FreeSurface(e->img[1][2]);
 	SDL_FreeSurface(e->img[1][3]);
 	SDL_FreeSurface(e->img[1][4]);
+    SDL_FreeSurface(e->img[2][0]);
+	SDL_FreeSurface(e->img[2][1]);
+	SDL_FreeSurface(e->img[2][2]);
+	SDL_FreeSurface(e->img[2][3]);
+	SDL_FreeSurface(e->img[2][4]);
+	SDL_FreeSurface(e->img[3][0]);
+	SDL_FreeSurface(e->img[3][1]);
+	SDL_FreeSurface(e->img[3][2]);
+	SDL_FreeSurface(e->img[3][3]);
+	SDL_FreeSurface(e->img[3][4]);
     SDL_FreeSurface(e->exp[0]);
 	SDL_FreeSurface(e->exp[1]);
 	SDL_FreeSurface(e->exp[2]);
@@ -132,10 +151,12 @@ void free_enemy(Enemy *e)
 	SDL_FreeSurface(e->exp[9]);
 }
 
+
 void afficher_explosion(Enemy e,SDL_Surface *screen)
 {
  SDL_BlitSurface(e.exp[e.expframe],NULL,screen,&e.posexp);
 }
+
 
 void animer_explosion(Enemy *e)
 {
@@ -146,6 +167,125 @@ void animer_explosion(Enemy *e)
 	(e->expframe)++;}
 }
 
+void moveAI(Enemy* e,SDL_Rect posHero)
+{
+    int s1=850,s2=250;
+    int d=(e->pos.x) - posHero.x;
+	if (d>s2 && d<s1){
+	e ->direction=1; 
+	e->pos.x-=8;}
+	else {
+	if (d>-s1 && d<-s2){
+	e ->direction=0; 
+	e ->pos.x+=8;}
+	else{
+	if (d>=0 && d<=s2) {
+	e ->direction=3;
+	e ->pos.x-=8;}
+	else{
+    if (d>=-s2  && d<=0){
+	e ->direction=2;
+	e -> pos.x +=8;}
+    }}}
+}
+
+
+void updateEnnemiState (Enemy* e, int distEH) 
+{
+int s1=850,s2=250;
+switch(e->state){
+case(waiting):
+if (distEH>s1 ){
+e->state=waiting;}
+else{
+if (s2<distEH<=s1 ){
+e->state=following;}}
+break;
+case(following):
+if (s2<distEH<=s1 ){
+e->state=following;}
+else{
+if (0<distEH<=s2 ){
+e->state=attacking;}}
+break;
+case(attacking):
+if (0<distEH<=s2 ){
+e->state=attacking;}
+break;
+}
+}
+
+
+void updateEnnemi (Enemy *e,SDL_Rect posHero)
+{
+switch(e->state){
+case(waiting):
+animerEnnemi(e);	
+break;
+case(following):
+animerEnnemi(e);
+moveAI(e,posHero);
+break;
+case(attacking):
+animerEnnemi(e);
+moveAI(e,posHero);
+break;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,7 +294,7 @@ void animer_explosion(Enemy *e)
 void initPerso(personne *p)
 {
     p->sprite = IMG_Load("sprite.png");
-    p->posPerso.x = 0;
+    p->posPerso.x =0;
     p->posPerso.y = 265;
     p->posPerso.w =151;
     p->posPerso.h = 258;
@@ -253,7 +393,8 @@ if (p->up == 1)
 
 
 
-void saut2(personne *p, Uint32 dt) {
+void saut2(personne *p, Uint32 dt) 
+{
    
    int posx_absolu, posy_absolu ;
    if (p->up == 1) {
@@ -276,13 +417,6 @@ void freePerso(personne *p)
     SDL_FreeSurface(p->vies);
      TTF_CloseFont(p->police);
 }
-
-
-
-
-
-
-
 
 
 
