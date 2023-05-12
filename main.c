@@ -1,9 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h> 
-#include <SDL/SDL_mixer.h>
-#include <SDL/SDL_ttf.h>
 #include "fonction.h"
 
 
@@ -12,23 +6,44 @@
 
 int main()
 {
+
+//menu
 SDL_Surface *screen;
 image IMAGE,IMAGE1,IMAGE2,IMAGE3,IMAGE_BTN1, IMAGE_BTN2,IMAGE_BTN3,IMAGE_BTN4,IMAGE_BTN5,IMAGE_BTN6,IMAGE_BTN7,IMAGE_BTN8,IMAGE_BTN9,IMAGE_BTN10,IMAGE_BTN11,IMAGE_BTN12;
 image OPIM, IMAGE_BTNO1, IMAGE_BTNO2,IMAGE_BTNO3,IMAGE_BTNO4,IMAGE_BTNO5,IMAGE_BTNO6,IMAGE_BTNO7,IMAGE_BTNO33,IMAGE_BTNO44,IMAGE_BTNO55,IMAGE_BTNO66;
-image IMAGE_BTNP1;
-image PLAY;
+image PLAY,IMAGE_BTNP;
+image credit1,credit2,IMAGE_BTNC1,IMAGE_BTNC;
+image choix,choix_BTN1,choix_BTN2;
 Mix_Music *music;
 Mix_Chunk *mus;
 texte txte;
 SDL_Event event;
+int boucle=1,ev,background=1,arrow=0,arrop=0,i=0,volume=64;
+
+//enemy
 Enemy e;
+int collision=0,condition=0,explosion=0,distEH,n;
+
+//minimap
 minimap m;
-Background b;
 Uint32 prev, dt,t;
+int collisionpp1=0,collisionpp2=0,collisionpp3=0,collisionpp4=0;
+
+//background
+Background b;
+ScoreInfo s,trois[3];
+image best_score,best_score_BTN1;
+
+//perso
 personne p; 
-int ev=0,background=1,arrow=0,arrop=0;
-int boucle=1;
-int i=0,volume=64,collision,jump=0,collisionpp;
+int jump=0;
+
+//back_enigme
+enigmetf etf;
+char *nomfichier[100];
+int enigme=0,resultat;
+image city_future,game_over,game_over_BTN1,game_over_BTN2;
+
 
 if (SDL_Init (SDL_INIT_VIDEO|SDL_INIT_AUDIO | SDL_INIT_TIMER)!=0)
 {
@@ -41,7 +56,7 @@ screen=SDL_SetVideoMode(1090,668,32,SDL_SWSURFACE|SDL_DOUBLEBUF);
 
 
 
-
+//back menu
 initialiser_imageBACK3 (&IMAGE3);
 initialiser_imageBACK2 (&IMAGE2);
 initialiser_imageBACK1 (&IMAGE1);
@@ -57,6 +72,7 @@ initialiser_imageBOUTON8 (&IMAGE_BTN8);
 initialiser_audio (music,&volume);
 initialiser_texte (&txte);
 
+//back option
 initialiser_imageOPIM (&OPIM);
 initialiser_imageBOUTONO1 (&IMAGE_BTNO1);
 initialiser_imageBOUTONO2 (&IMAGE_BTNO2);
@@ -71,16 +87,71 @@ initialiser_imageBOUTONO55 (&IMAGE_BTNO55);
 initialiser_imageBOUTONO66 (&IMAGE_BTNO66);
 
 
-initialiser_imagePLAY (&PLAY);
-initialiser_imageBOUTONP1 (&IMAGE_BTNP1);
+
+
+
+
+
+//back play
+
+initialiser_imageBOUTONP (&IMAGE_BTNP);
 t= SDL_GetTicks();
+//background
 init_back(&b);
+//perso
 initPerso(&p);
+//enemy
 initEnnemi(&e);
+
+//minimap
 initmap(&m);
 
+//city of the future
+initialiser_city_future (&city_future);
+
+//back_enigme
+InitEnigme(&etf,&nomfichier[100]);
 
 
+//back credit1
+initialiser_imageCREDIT1(&credit1);
+initialiser_imageBOUTONC1 (&IMAGE_BTNC1);
+
+//back credit2
+initialiser_imageCREDIT2(&credit2);
+initialiser_imageBOUTONC (&IMAGE_BTNC);
+
+//back choix
+initialiser_imageCHOIX(&choix);
+initialiser_imageCHOIX_BTN1 (&choix_BTN1);
+initialiser_imageCHOIX_BTN2 (&choix_BTN2);
+
+//gameover
+initialiser_game_over (&game_over);
+initialiser_image_game_over_BTN1 (&game_over_BTN1);
+initialiser_image_game_over_BTN2 (&game_over_BTN2);
+
+//best_score
+initialiser_best_score(&best_score);
+initialiser_image_best_score_BTN1 (&best_score_BTN1);
+
+/*
+note: 
+back1  menu
+back2 play (singleplayer/niveau1)
+back3 option
+back4 premiere page du credit
+back5 deusieme page du credit
+back6 enigme
+back7 page du choix entre multiplayer ou singleplayer
+back8 play (multiplayer)
+back9 play (singleplayer/niveau1)
+back10 play (singleplayer/niveau1)
+back11 gameover
+back12 city of the future
+back13 best score
+
+*/
 
 while (boucle)
 {
@@ -140,10 +211,91 @@ afficher_imageBTNO66 (screen, IMAGE_BTNO66);}
 }
 else{
 if (background==2){
-afficher_imagePLAY (screen, PLAY);
-afficher_imageBTNP1 (screen, IMAGE_BTNP1);}
+	
+		prev = SDL_GetTicks();
+		afficher_back(screen,b); 
+		afficher_best_score_BTN1 (screen,best_score_BTN1);
+		animerBack (&b);
+		afficheranim(b,screen);
+		if (condition==0){
+		afficherPerso(p, screen);
+		afficherEnnemi(e,screen);}
+
+
+		afficherminimap(m,screen);
+		afficher_imageBTNP (screen, IMAGE_BTNP);
+		afficher_temps( t,screen);
+		animerMinimap(&m);
+
+
+		collisionpp1=collisionPP_droite( p.posPerso,m.mas,b.camera_pos);
+		collisionpp2=collisionPP_gauche( p.posPerso, m.mas,b.camera_pos);
+		collisionpp3=collisionPP_up( p.posPerso, m.mas,b.camera_pos);
+		collisionpp4=collisionPP_down( p.posPerso,m.mas,b.camera_pos);
+
+		if (collisionpp1==1 || collisionpp2==1 || collisionpp3==1 || collisionpp4==1){
+		if (p.score>0){
+		printf("collison\n");
+		p.score-=10;
+		collisionpp1=0;
+		collisionpp2=0;
+		collisionpp3=0;
+		collisionpp4=0;}
+		else{
+		background=6;}
+		}
+	
+}
+
+else{
+if (background==4){
+afficher_imageCREDIT1 (screen, credit1);
+afficher_imageBTNC1 (screen, IMAGE_BTNC1);}
+
+else{
+if (background==5){
+afficher_imageCREDIT2 (screen, credit2);
+afficher_imageBTNC (screen, IMAGE_BTNC);}
+else{
+if (background==6){
+afficherEnigme(etf,screen);
+
+}
+else{
+if (background==12){
+afficher_city_future(screen,city_future);
+}
+else{
+if (background==13){
+afficher_best_score(screen,best_score);
+if (ev==1){
+afficherBest(screen,trois);}
+}
+else{
+if (background==11){
+afficher_game_over(screen,game_over);
+if (ev==1){
+afficher_game_over_BTN1 (screen, game_over_BTN1);
+}
+else{
+if (ev==2){
+afficher_game_over_BTN2(screen,game_over_BTN2);}
 }
 }
+else{
+if (background==7){
+afficher_imageCHOIX(screen,choix);
+afficher_imageBTNP (screen, IMAGE_BTNP);
+if (ev==1){
+afficher_imageCHOIX_BTN1 (screen, choix_BTN1);}
+else{
+if (ev==2){
+afficher_imageCHOIX_BTN2 (screen, choix_BTN2);}}}
+}
+}
+}
+}}}}}}
+
 
 
 if (background==1){
@@ -158,7 +310,7 @@ while (SDL_PollEvent (&event))
 		case SDL_MOUSEBUTTONDOWN: 
                 if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=405 && event.motion.y>=360 && (event.motion.x<=815 && event.motion.x>=685)){           
 			ev=5;
-			background=2;}
+			background=7;}
 
                 if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=470 && event.motion.y>=425 && (event.motion.x<=815 && event.motion.x>=685)){
             ev=6;
@@ -166,7 +318,8 @@ while (SDL_PollEvent (&event))
                         
 
                 if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=539 && event.motion.y>=494 && (event.motion.x<=815 && event.motion.x>=685)){
-			ev=7;}
+			ev=7;
+			background=4;}
 
                 if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=614 && event.motion.y>=569 && (event.motion.x<=815 && event.motion.x>=685)){			
 			ev=8;
@@ -484,145 +637,441 @@ while (SDL_PollEvent (&event))
 else{
 if (background==2){
 
-prev = SDL_GetTicks();
-afficher_back(screen,b); 
-animerBack (&b);
-afficheranim(b,screen);
-afficherEnnemi(e,screen);
-afficherPerso(p, screen);
-move(&e);
-if (e.direction==1 || e.direction==0){
- animerEnnemi(&e);}
 
 
-afficherminimap(m,screen);
-afficher_temps( t,screen);
-animerMinimap(&m);
+	while (SDL_PollEvent(&event))
+			{
 
-/*collisionpp=collisionPP(p.posPerso,m.mas);
-if(collisionpp==1){
-p.score-=5;}*/
+			    switch (event.type)
+			    {
 
-while (SDL_PollEvent(&event))
-        {
+				case SDL_MOUSEBUTTONDOWN: 
+								if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=590+IMAGE_BTNP.pos_img_affiche.h && event.motion.y>=590 && event.motion.x<=991+IMAGE_BTNP.pos_img_affiche.w && event.motion.x>=991){
+									    
+							background=1;}
 
-            switch (event.type)
-            {
-
-			case SDL_MOUSEBUTTONDOWN: 
-						    if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=100 && event.motion.y>=0 && event.motion.x<=1090 && event.motion.x>=1025){
-						            
-						background=1;}
-					break;
-            case SDL_QUIT:
-                boucle=0;
-                break;
-           case SDL_KEYDOWN:
-              
-                if  (event.key.keysym.sym==SDLK_RIGHT){
-                    p.direction = 0;
-                    }
-				if  (event.key.keysym.sym==SDLK_ESCAPE){
-                    boucle= 0;
-                    }
-				if  (event.key.keysym.sym==SDLK_h){
-					initialiser_audiobref (mus);  
-					background=1;
-                    }
-                if  (event.key.keysym.sym==SDLK_LEFT){
-                    p.direction = 1;
-                    }
-                if  (event.key.keysym.sym==SDLK_UP){
-                    jump=1;
-                    }
-                if  (event.key.keysym.sym==SDLK_DOWN){
-                    p.up=0;
-                   }
-                if  (event.key.keysym.sym==SDLK_SPACE){
-                    if (p.up == 0)
-                    {
-                        p.jump_V = -p.jump_height;
-                        p.up = 1;
-                    }}
-				if  (event.key.keysym.sym==SDLK_KP_PLUS){
-                p.acceleration +=0,005;
-                }
-			    if  (event.key.keysym.sym==SDLK_KP_MINUS){
-                p.acceleration -=0,01;
-                }
-                break;
+							if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=688 && event.motion.y>=620 && event.motion.x<=1020 && event.motion.x>=650){
+														
+											background=13;}
+						break;
+			    case SDL_QUIT:
+			        boucle=0;
+			        break;
+			   case SDL_KEYDOWN:
+			      
+			        if  (event.key.keysym.sym==SDLK_RIGHT){
+			            p.direction = 0;
+			            }
+					if  (event.key.keysym.sym==SDLK_ESCAPE){
+			            boucle= 0;
+			            }
+					if  (event.key.keysym.sym==SDLK_h){
+						initialiser_audiobref (mus);  
+						background=1;
+			            }
+			        if  (event.key.keysym.sym==SDLK_LEFT){
+			            p.direction = 1;
+			            }
+			        if  (event.key.keysym.sym==SDLK_UP){
+			            jump=1;
+			            }
+			        if  (event.key.keysym.sym==SDLK_DOWN){
+			            p.up=0;
+			           }
+			        if  (event.key.keysym.sym==SDLK_SPACE){
+			            if (p.up == 0)
+			            {
+			                p.jump_V = -p.jump_height;
+			                p.up = 1;
+			            }}
+					if  (event.key.keysym.sym==SDLK_KP_PLUS){
+			        p.acceleration +=0,005;
+			        }
+					if  (event.key.keysym.sym==SDLK_KP_MINUS){
+			        p.acceleration -=0,01;
+			        }
+			        break;
 
 
 
 
 
-            case SDL_KEYUP:
-                switch (event.key.keysym.sym)
-                {
-                case SDLK_RIGHT:
-                    if (p.direction==0){
-					p.posSprite.x=0;
-					p.posSprite.y=0;}
-					else{
-					p.posSprite.x=0;
-					p.posSprite.y=258;}
-                    p.direction = -1;
-                    break;
-                   
-                case SDLK_UP:
-                    p.up=0;
-                    break;
-                case SDLK_LEFT:
-                    if (p.direction==0){
-					p.posSprite.x=0;
-					p.posSprite.y=0;}
-					else{
-                    p.posSprite.x=755-p.posSprite.w;
-					p.posSprite.y=258;}
-                    p.direction = -1;
-                    break;
-                }
-                break;
-            }
-        }
+			    case SDL_KEYUP:
+			        switch (event.key.keysym.sym)
+			        {
+			        case SDLK_RIGHT:
+			            if (p.direction==0){
+						p.posSprite.x=0;
+						p.posSprite.y=0;}
+						else{
+						p.posSprite.x=0;
+						p.posSprite.y=258;}
+			            p.direction = -1;
+			            break;
+			           
+			        case SDLK_UP:
+			            p.up=0;
+			            break;
+
+					case SDLK_b:
+					        background=13;
+					        break;
+			        case SDLK_LEFT:
+			            if (p.direction==0){
+						p.posSprite.x=0;
+						p.posSprite.y=0;}
+						else{
+			            p.posSprite.x=755-p.posSprite.w;
+						p.posSprite.y=258;}
+			            p.direction = -1;
+			            break;
+			        }
+			        break;
+			    }
+			}
+
+
+	if (p.direction==1 || p.direction==0){
+	movePerso(&p,dt);
+	animerPerso(&p);
+	if (p.direction==0){
+	p.score+=5;}}
+	saut(&p,dt,265);
+	MAJMinimap(p.posPerso,&m, b.camera_pos,20);
+	MAJMinimap_enemie(e.pos,&m, b.camera_pos,20);
+
+	if (jump==1){
+	saut2(&p,dt);
+	}
+	
+	distEH=(e.pos.x)-p.posPerso.x;
+	printf("distance: %d\n",distEH);
+	updateEnnemiState (&e,distEH);
+	updateEnnemi (&e,p.posPerso);
+
+
+	collision=collisionBB(p,e);
+
+
+		if (collision==0) {
+		if (p.posPerso.x==545){
+		p.score+=100;}
+		if ((p.posPerso.x>= 545) && ((p.posPerso.x+b.camera_pos.x)<1768) && (p.direction== 0)){
+		scrolling(&b, 0, p);}
+		else {
+		if ((((p.posPerso.x+b.camera_pos.x) >= 545) || (b.camera_pos.x >15)) && p.direction== 1){
+		scrolling(&b, 1, p);}}
+		}
+		else{
+		if (collision==1){
+		if (p.spritevie.y<=(128-p.spritevie.h)){
+		p.spritevie.y+=26;
+		}
+		else{
+		e.posexp.x=p.posPerso.x-35;
+		e.posexp.y=p.posPerso.y+20;
+		explosion=1;
+		condition=1;}
+		}}
+
+		if (explosion==1){
+		if (e.arret==0){
+		animer_explosion(&e);
+		afficher_explosion(e,screen);
+		}
+		else{
+		s.score=p.score;
+		s.temps=3;
+		strcpy(s.playerName,"maram");
+		saveScore(s,"scores.txt");
+		boucle=0;}
+		}
+
+
+
+	if ((p.posPerso.x+b.camera_pos.x)>=1768 && collision==0){
+	background=6;
+	}
+
+
+
+	dt = SDL_GetTicks() - prev;
+	
+	
+}
+
+else{
+if (background==4){
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
+       case SDL_MOUSEBUTTONDOWN: 
+		    if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=100 && event.motion.y>=0 && event.motion.x<=1090 && event.motion.x>=1025){
+			initialiser_audiobref (mus);
+		            
+		     background=5;}
+	         break;
+    }
 }}
 
-if (p.direction==1 || p.direction==0){
-movePerso(&p,dt);
-animerPerso(&p);}
-saut(&p,dt,265);
-MAJMinimap(p.posPerso,&m, b.camera_pos,20);
-MAJMinimap_enemie(e.pos,&m, b.camera_pos,20);
-
-if (jump==1){
-saut2(&p,dt);
-}
 
 
-collision=collisionBB(p,e);
+else{
+if (background==7){
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
+       case SDL_MOUSEBUTTONDOWN: 
+		    if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=choix_BTN1.pos_img_affiche.y+choix_BTN1.pos_img_affiche.h && event.motion.y>=choix_BTN1.pos_img_affiche.y && event.motion.x<=choix_BTN1.pos_img_affiche.x+choix_BTN1.pos_img_affiche.w && event.motion.x>=choix_BTN1.pos_img_affiche.x){
+			initialiser_audiobref (mus);
+		      ev=1;      
+		     background=2;}
+			if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=choix_BTN2.pos_img_affiche.y+choix_BTN2.pos_img_affiche.h && event.motion.y>=choix_BTN2.pos_img_affiche.y && event.motion.x<=choix_BTN2.pos_img_affiche.x+choix_BTN2.pos_img_affiche.w && event.motion.x>=choix_BTN2.pos_img_affiche.x){
+			initialiser_audiobref (mus);
+		      ev=2;      
+		     background=8;}
 
+			  if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=590+IMAGE_BTNP.pos_img_affiche.h && event.motion.y>=590 && event.motion.x<=1000+IMAGE_BTNP.pos_img_affiche.w && event.motion.x>=990){
+						            
+						background=1;}
+	         break;
+		case SDL_MOUSEMOTION:
 
-    if (collision==0) {
-    if (p.posPerso.x==545){
-    p.score+=100;}
-	if ((p.posPerso.x>= 545) && ((p.posPerso.x+b.camera_pos.x)<1768) && (p.direction== 0)){
-	scrolling(&b, 0, p);}
-	else {
-	if ((((p.posPerso.x+b.camera_pos.x) >= 545) || (b.camera_pos.x >15)) && p.direction== 1){
-	scrolling(&b, 1, p);}}
-	}
-    else{
-    if (collision==1){
-    if (p.spritevie.y<=(128-p.spritevie.h)){
-    p.spritevie.y+=26;
+				if (event.motion.y<=choix_BTN1.pos_img_affiche.y+choix_BTN1.pos_img_affiche.h && event.motion.y>=choix_BTN1.pos_img_affiche.y && event.motion.x<=choix_BTN1.pos_img_affiche.x+choix_BTN1.pos_img_affiche.w && event.motion.x>=choix_BTN1.pos_img_affiche.x){
+		      ev=1;      
+		     }
+			else{
+			ev=0;}
+			if (event.motion.y<=choix_BTN2.pos_img_affiche.y+choix_BTN2.pos_img_affiche.h && event.motion.y>=choix_BTN2.pos_img_affiche.y && event.motion.x<=choix_BTN2.pos_img_affiche.x+choix_BTN2.pos_img_affiche.w && event.motion.x>=choix_BTN2.pos_img_affiche.x){
+		      ev=2;      
+		     }
+
+            break;
+
+		case SDL_KEYDOWN:
+		if(event.key.keysym.sym==SDLK_s){
+			initialiser_audiobref (mus);
+			ev=1;
+			background=2;
+			}
+		else{
+			if(event.key.keysym.sym==SDLK_n){
+			initialiser_audiobref (mus);
+			ev=2;
+			background=8;}
+			}
+			break;
+		
+
     }
-    else{
-    boucle=0;}
-    }}
+}}
+else{
+if (background==5){
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
+       case SDL_MOUSEBUTTONDOWN: 
+		    if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=100 && event.motion.y>=0 && event.motion.x<=1090 && event.motion.x>=1025){
+			initialiser_audiobref (mus);		            
+		     background=1;}
+	         break;
+    }
+}}
+else{
+if (background==12){
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
+    }
+}}
+else{
+if (background==11){
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
 
+		case SDL_MOUSEBUTTONDOWN: 
+                if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=545 && event.motion.y>=486 && (event.motion.x<=537 && event.motion.x>=456)){  
+			initialiser_audiobref (mus);         
+			ev=1;
+			background=2;
+			p.posPerso.x=0;
+			p.direction=-1;
+			p.posPerso.y=265;
+			p.score=0;
+			b.camera_pos.x=0;}
+			
+ 
+			if (event.button.button==SDL_BUTTON_LEFT && event.motion.y<=545 && event.motion.y>=486 && (event.motion.x<=614 && event.motion.x>=533)){  
+			initialiser_audiobref (mus);         
+			ev=2;
+			s.score=p.score;
+			s.temps=3;
+			strcpy(s.playerName,"maram");
+			saveScore(s,"scores.txt");
+			boucle=0;}
+			break;
 
-dt = SDL_GetTicks() - prev;
+	   case SDL_MOUSEMOTION:
+
+			if (event.motion.y<=545 && event.motion.y>=486 && event.motion.x<=537 && event.motion.x>=456){
+			initialiser_audiobref (mus);
+			ev=1;}
+			else{
+			ev=0;}
+			if (event.motion.y<=545 && event.motion.y>=486 && event.motion.x<=614 && event.motion.x>=533){
+			initialiser_audiobref (mus);
+			ev=2;
+			}
+		    break;
+		
+		case SDL_KEYDOWN:
+		if(event.key.keysym.sym==SDLK_y){
+			ev=1;
+			background=2;
+			p.posPerso.x=0;
+			p.direction=-1;
+			p.posPerso.y=265;
+			p.score=0;
+			b.camera_pos.x=0;
+			}
+		else{
+			if(event.key.keysym.sym==SDLK_n){
+			ev=2;
+			s.score=p.score;
+			s.temps=3;
+			strcpy(s.playerName,"maram");
+			saveScore(s,"scores.txt");
+			boucle=0;}
+			}
+			break;
+
+    }
+}}
+else{
+if (background==13){
+
+ev=1;
+while (SDL_PollEvent (&event))
+{	
+	switch (event.type)
+	{
+		case SDL_QUIT:
+			boucle=0;
+			break;
+       case SDL_KEYDOWN:
+		if(event.key.keysym.sym==SDLK_p){
+			background=2;
+			}
+		
+			break;
+    }
+}}
+else{
+//////////////////////////////////////////////////////////////////////////////////////////////////back6//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (background==6){
+
+while (SDL_PollEvent(&event)) 
+		{
+			switch (event.type)
+			{
+				case SDL_QUIT:
+
+					boucle=0;
+					break;
+
+				case SDL_MOUSEMOTION:
+
+					printf("Souris en position %d %d\n",event.motion.x, event.motion.y);
+					break;
+
+				case SDL_MOUSEBUTTONUP:
+				
+					if((event.motion.x>429 && event.motion.x<666)&&(event.motion.y>346 && event.motion.y<419))
+					{
+						etf.pos_selected=1;
+						if (event.button.button == SDL_BUTTON_LEFT)
+						{
+							resultat=verify_enigme(&etf,screen);
+							if (resultat==1 ){
+							if (p.posPerso.x<545){
+							background=2;
+							p.posPerso.x=0;
+							p.posPerso.y=265;}
+							else{
+							if(p.posPerso.x>750){
+							background=12;}}
+							}
+							else{
+							if (resultat==0){
+							background=11;}}
+						} 	 
+					}
+					else if((event.motion.x>139 && event.motion.x<376)&&(event.motion.y>482 && event.motion.y<555))
+					{
+						etf.pos_selected=2;
+						if (event.button.button == SDL_BUTTON_LEFT)
+						{
+							resultat=verify_enigme(&etf,screen);
+							if (resultat==1 ){
+							if (p.posPerso.x<545){
+							background=2;
+							p.posPerso.x=0;
+							p.posPerso.y=265;}
+							else{
+							if(p.posPerso.x>750){
+							background=12;}}
+							}
+							else{
+							if (resultat==0){
+							background=11;}}
+						} 
+					}
+					else if((event.motion.x>691 && event.motion.x<928)&&(event.motion.y>482 && event.motion.y<555))
+					{
+						etf.pos_selected=3;
+						if (event.button.button == SDL_BUTTON_LEFT)
+						{
+							resultat=verify_enigme(&etf,screen);
+							if (resultat==1 ){
+							if (p.posPerso.x<545){
+							background=2;
+							p.posPerso.x=0;
+							p.posPerso.y=265;}
+							else{
+							if(p.posPerso.x>750){
+							background=12;}}
+							}
+							else{
+							if (resultat==0){
+							background=11;}}
+						} 					
+					}
+				
+				break;
+}}
 }
+}}}}}}}}}
 SDL_Flip(screen);
 }
 
@@ -655,12 +1104,31 @@ liberer_image (IMAGE_BTNO55);
 liberer_image (IMAGE_BTNO66);
 
 liberer_image (PLAY);
-liberer_image (IMAGE_BTNP1);
+liberer_image (IMAGE_BTNP);
 free_back(&b);
 free_enemy(&e);
 freePerso(&p);
 liberer_mp(&m);
-    
+free_Surface_enigme(etf);
+
+
+
+liberer_image (credit1);
+liberer_image (credit2);
+liberer_image (IMAGE_BTNC);
+liberer_image (IMAGE_BTNC1);
+
+liberer_image (choix);
+liberer_image (choix_BTN1);
+liberer_image (choix_BTN2);
+
+liberer_image (city_future);
+
+liberer_image (game_over);
+liberer_image (game_over_BTN1);
+liberer_image (game_over_BTN2);
+
+liberer_image (best_score);
 
 liberer_musique (music); 
 liberer_musiquebref (mus);
@@ -671,7 +1139,6 @@ Mix_Quit();
 SDL_Quit();
 return 0;
 }
-
 
 
 
