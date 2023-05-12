@@ -8,7 +8,7 @@ int main()
   Enemy e;
   Uint32 prev, dt;
   personne p;
-  int boucle=1,jump=0,collision,condition=0,explosion=0;
+  int boucle=1,jump=0,collision=0,condition=0,explosion=0,distEH,n;
 
   if (SDL_Init (SDL_INIT_VIDEO|SDL_INIT_AUDIO | SDL_INIT_TIMER)!=0){
     printf("Could not initialize SDL: %s.\n", SDL_GetError());
@@ -18,9 +18,8 @@ int main()
 
 
   init_background(&back);
-  if (condition==0){
   initPerso(&p);
-  initEnnemi(&e);}
+  initEnnemi(&e);
 
 while(boucle){
 
@@ -29,18 +28,9 @@ afficher_back(screen,back);
 if (condition==0){
 afficherPerso(p, screen);
 afficherEnnemi(e,screen);}
-move(&e);
-if (e.direction==1 || e.direction==0){
- animerEnnemi(&e);}
 
 
-collision=collisionBB(p,e);
-if (collision==1){
-e.posexp.x=p.posPerso.x-35;
-e.posexp.y=p.posPerso.y+20;
-explosion=1;
-condition=1;
-}
+
 
 
  while (SDL_PollEvent(&event))
@@ -121,6 +111,21 @@ saut(&p,dt,265);
 if (jump==1){
 saut2(&p,dt);
 }
+
+
+distEH=(e.pos.x)-p.posPerso.x;
+printf("distance: %d\n",distEH);
+updateEnnemiState (&e,distEH);
+updateEnnemi (&e,p.posPerso);
+
+collision=collisionBB(p,e);
+if (collision==1){
+e.posexp.x=p.posPerso.x-35;
+e.posexp.y=p.posPerso.y+20;
+explosion=1;
+condition=1;
+}
+
 if (explosion==1){
 if (e.arret==0){
 animer_explosion(&e);
